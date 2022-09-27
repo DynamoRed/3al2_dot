@@ -1,0 +1,20 @@
+{
+	"informations": {
+		"name": "Dot",
+		"version": "beta-1.0.0"
+	},
+	"colors": {
+		"blurple": "#5865F2",
+		"yellow": "#FEE75C",
+		"green": "#57F287",
+		"red": "#ED4245",
+		"transparent": "#2f3136"
+	},
+	"credentials": {
+		"HOST": "127.0.0.1",
+		"PORT": 3306,
+		"USER": "dot",
+		"DATABASE": "dot"
+	},
+	"authorizedServers": ["988381574099791933"]
+}
