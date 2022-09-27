@@ -16,4 +16,17 @@ export class UserUtil {
             });
         });
     }
+
+    static isRegistered(did: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            Database.pool.query("SELECT 1 FROM members WHERE discord_id = ? AND registered_flg = 1", [did], (err: MysqlError | null, res) => {
+                if(err){
+                    Logging.write(err.message, LogType.Error);
+                    reject();
+                }
+                if(res.length === 1) resolve(true);
+                resolve(false);
+            });
+        });
+    }
 }

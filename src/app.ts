@@ -11,7 +11,7 @@ import { ButtonsHandler } from './handlers/buttons.handler';
 const appRunnerUuid: string = uuidV4();
 
 const app: Client = new Client({
-	intents: ["Guilds", "GuildMembers", "GuildMessages", "GuildMessageReactions"],
+	intents: ["Guilds", "GuildMembers", "GuildMessages", "GuildMessageReactions", "MessageContent"],
 	presence: {
 		status: 'online',
 		activities: [{ name: 'Attacking myges.fr', type: ActivityType.Playing }]
@@ -19,7 +19,7 @@ const app: Client = new Client({
 });
 
 process.on("unhandledRejection", (reason: any, promise: Promise<any>) => {
-	Logging.write(`Unhandled rejection: ${reason.stack || reason}`, LogType.Error);
+	console.error(`Unhandled rejection: ${reason?.stack || reason}`);
 })
 
 const start = () => {

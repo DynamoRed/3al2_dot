@@ -23,4 +23,8 @@ export class Configuration {
 	get authorizedServers(){
 		return this._appConfig.authorizedServers;
 	}
+
+	public getCommandsOnly(cid: string): string[]{
+		return this._appConfig.commandsOnlyChannels[cid] || [];
+	}
 }

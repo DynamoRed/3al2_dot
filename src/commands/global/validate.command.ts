@@ -15,32 +15,37 @@ const command: ICommand = {
     execute(interaction: CommandInteraction, app: Client) {
         const code: any = interaction.options.get('code')?.value;
 
-        if(interaction.guild?.members.cache.find(m => m.user.id === interaction.user.id)?.roles.cache.find(r => r.name.toLowerCase().includes('classe'))){
-            return interaction.reply({embeds: [EmbedsUtil.warning('🤷‍♂️ You are already verified !', [])], ephemeral: true});
-        }
+        UserUtil.isRegistered(interaction.user.id).then(flg => {
+            if(flg || interaction.guild?.members.cache.find(m => m.user.id === interaction.user.id)?.roles.cache.find(r => r.name.toLowerCase() === 'classe')) return interaction.reply({embeds: [EmbedsUtil.warning('🤷‍♂️ You are already verified !', [])], ephemeral: true});
 
-        UserUtil.discordIdToUuid(interaction.user.id).then(uuid => {
-            new Promise<string>((resolve, reject) => {
-                Database.pool.query("SELECT name FROM members WHERE uuid=? AND validation_code=?", [uuid, code], (err: MysqlError | null, res) => {
-                    if(err){
-                        Logging.write(err.message, LogType.Error);
-                        reject();
-                    }
-                    resolve(res.length === 1 ? res[0].name : null);
-                });
-            }).then(name => {
-                if(name){
-                    interaction.reply({embeds: [EmbedsUtil.success('✅ Here we go !', [`Welcome onboard`])], ephemeral: true});
+            UserUtil.discordIdToUuid(interaction.user.id).then(uuid => {
+                new Promise<string>((resolve, reject) => {
+                    Database.pool.query("SELECT firstname, lastname FROM members WHERE uuid=? AND validation_code=?", [uuid, code], (err: MysqlError | null, res) => {
+                        if(err){
+                            Logging.write(err.message, LogType.Error);
+                            reject();
+                        }
+                        resolve(res.length === 1 ? res[0].firstname : null);
+                    });
+                }).then(name => {
+                    if(name){
+                        Database.pool.query("UPDATE members SET registered_flg=1 WHERE uuid=?", [uuid], (err: MysqlError | null, res) => {
+                            if(err){
+                                Logging.write(err.message, LogType.Error);
+                                return;
+                            }
 
-                    const classRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase().includes('classe'))?.id;
-                    const visitorRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase().includes('visiteur'))?.id;
-                    const member = interaction.guild?.members.cache.find(m => m.user.id === interaction.user.id);
-                    member?.roles.remove(visitorRole, 'Registering').then(() => member?.roles.add(classRole, 'Registering').then(() => member?.setNickname(name)));
-                } else interaction.reply({embeds: [EmbedsUtil.error('🔴 Invalid key', [])], ephemeral: true});
-            })
-        }).catch(() => {
-            interaction.reply({embeds: [EmbedsUtil.warning('💤 First things first !', [`Use \`/register\` to get a verification key first`])], ephemeral: true});
-        })
+                            interaction.reply({embeds: [EmbedsUtil.success('✅ Here we go !', [`Welcome onboard`])], ephemeral: true});
+
+                            const classRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase() === 'classe')?.id;
+                            const visitorRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase() === 'visiteur')?.id;
+                            const member = interaction.guild?.members.cache.find(m => m.user.id === interaction.user.id);
+                            member?.roles.remove(visitorRole, 'Registering').then(() => member?.roles.add(classRole, 'Registering').then(() => member?.setNickname(name)));
+                        });
+                    } else interaction.reply({embeds: [EmbedsUtil.error('🔴 Invalid key', [])], ephemeral: true});
+                })
+            }).catch(() => interaction.reply({embeds: [EmbedsUtil.warning('💤 First things first !', [`Use \`/register\` to get a verification key first`])], ephemeral: true}));
+        });
     },
 }
 

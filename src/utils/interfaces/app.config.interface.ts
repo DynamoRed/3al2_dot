@@ -19,4 +19,5 @@ export interface IAppConfig {
 		DATABASE: string;
 	};
 	authorizedServers: string[];
+	commandsOnlyChannels: any;
 }

@@ -4,7 +4,7 @@ import fs from 'fs';
 import { IEvent } from "../utils/interfaces/event.interface";
 
 export class EventsHandler {
-	static handle(): Promise<any>{
+	static handle(): Promise<void>{
 		return new Promise((resolve, reject) => {
 			Logging.write(`Handling events`, LogType.Title);
 			Logging.write(`Scanning events folder`);
@@ -17,7 +17,8 @@ export class EventsHandler {
 				if(event.once) app.once(event.name, (...args) => event.execute(app, ...args));
 				else app.on(event.name, (...args) => event.execute(app, ...args));
 			});
-			resolve(true);
+
+			resolve();
 		});
 	}
 }

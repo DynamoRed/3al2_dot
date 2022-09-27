@@ -8,6 +8,6 @@ export class RegexUtil {
     }
 
     static get fullName(){
-        return /^([\w]{3,})+\s+([\w\s]{3,})+$/i;
+        return /^[A-Za-z -]+$/i;
     }
 }

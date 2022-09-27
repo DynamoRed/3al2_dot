@@ -5,7 +5,7 @@ import { ICommand } from "../utils/interfaces/command.interface";
 export class CommandsHandler {
 	static commands: ICommand[] = [];
 
-	static handle(): Promise<any>{
+	static handle(): Promise<void>{
 		return new Promise((resolve, reject) => {
 			Logging.write(`Handling commands`, LogType.Title);
 
@@ -17,8 +17,7 @@ export class CommandsHandler {
 				})
 			});
 
-
-			resolve(true);
+			resolve();
 		});
 	}
 }

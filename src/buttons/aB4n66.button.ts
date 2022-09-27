@@ -11,11 +11,11 @@ const button: IButton = {
     name: 'aB4n66',
     execute(interaction: ButtonInteraction, app: Client) {
         UserUtil.discordIdToUuid(interaction.user.id).then(uuid => {
-            Database.pool.query("SELECT name, email, validation_code as code FROM members WHERE uuid=?", [uuid], (err: MysqlError | null, res) => {
+            Database.pool.query("SELECT firstname, lastname, email, validation_code as code FROM members WHERE uuid=?", [uuid], (err: MysqlError | null, res) => {
                 if(err){
                     Logging.write(err.message, LogType.Error);
                 } else if(res.length === 1) {
-                    Mailing.send([res[0].email], 'Here is your verification key !', Mailing.verificationEmail(res[0].name, res[0].code)).then(() => {
+                    Mailing.send([res[0].email], 'Here is your verification key !', Mailing.verificationEmail(res[0].firstname + res[0].lastname, res[0].code)).then(() => {
                         interaction.reply({embeds: [EmbedsUtil.info('👍 Email resent', [`We resent you a verification key at **${res[0].email}**`, `Follow the instructions in this email to complete your verification`, `*Don't forget to check your spam folder*`])], ephemeral: true});
                     });
                 }

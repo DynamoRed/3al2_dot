@@ -3,12 +3,13 @@ import { IEvent } from "../utils/interfaces/event.interface"
 import { CommandsHandler } from "../handlers/commands.handler";
 import { REST, Routes, RESTPostAPIApplicationCommandsJSONBody, Client, Channel } from 'discord.js';
 import { Logging, LogType } from '../utils/logging.util';
-import { EmbedsUtil } from "src/utils/embeds.util";
+import { EmbedsUtil } from "../utils/embeds.util";
 
 const event: IEvent = {
     name: 'ready',
     once: true,
     execute(app: Client){
+		Logging.write('Initialization ended', LogType.Header);
         Logging.write('App is now ready !', LogType.Success);
 		app.channels.fetch("1023002996499554304").then((channel: any) => {
 			Logging.loggingChannel = channel;
