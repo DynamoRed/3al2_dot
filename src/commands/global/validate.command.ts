@@ -36,7 +36,7 @@ const command: ICommand = {
                                 return;
                             }
 
-                            interaction.reply({embeds: [EmbedsUtil.success('✅ Here we go !', [`Welcome onboard`])], ephemeral: true});
+                            interaction.reply({embeds: [EmbedsUtil.success('✅ Here we go !', [`Welcome onboard, you can now talk in ${interaction.guild?.channels.cache.find(c => c.name === "discussion")}`])], ephemeral: true});
 
                             const classRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase() === 'classe')?.id;
                             const visitorRole: any = interaction.guild?.roles.cache.find(r => r.name.toLowerCase() === 'visiteur')?.id;
