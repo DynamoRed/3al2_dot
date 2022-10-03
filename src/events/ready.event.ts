@@ -13,6 +13,7 @@ const event: IEvent = {
         Logging.write('App is now ready !', LogType.Success);
 		app.channels.fetch("1023002996499554304").then((channel: any) => {
 			Logging.loggingChannel = channel;
+			Logging.loggingChannel?.send({embeds: [EmbedsUtil.success("🤖 Bot started")]});
 		})
 
 		const appConfig: Configuration = new Configuration();
@@ -29,8 +30,6 @@ const event: IEvent = {
 		} catch (err) {
 			Logging.write(`${err}`, LogType.Error);
 		}
-
-		Logging.loggingChannel?.send({embeds: [EmbedsUtil.info("🤖 Bot started")]})
     }
 }
 

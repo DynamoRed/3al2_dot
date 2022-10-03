@@ -15,9 +15,10 @@ const command: ICommand = {
     data: new SlashCommandBuilder()
             .setName('register')
             .setDescription('Register your @myges.fr email adress to our services')
-            .addStringOption(opt => opt.setName('firstname').setDescription('Your firstname').setMinLength(2).setRequired(true))
-            .addStringOption(opt => opt.setName('lastname').setDescription('Your lastname').setMinLength(3).setRequired(true))
-            .addStringOption(opt => opt.setName('email').setDescription('Your @myges.fr email adress').setMinLength(10).setRequired(true))
+            .setDescriptionLocalization('fr', 'Enregistrez votre adresse mail @myges.fr sur nos services')
+            .addStringOption(opt => opt.setName('firstname').setNameLocalization('fr', 'prenom').setDescription('Your firstname').setDescriptionLocalization('fr', 'Votre prénom').setMinLength(2).setRequired(true))
+            .addStringOption(opt => opt.setName('lastname').setNameLocalization('fr', 'nom_de_famille').setDescription('Your lastname').setDescriptionLocalization('fr', 'Votre nom de famille').setMinLength(3).setRequired(true))
+            .addStringOption(opt => opt.setName('email').setDescription('Your @myges.fr email adress').setDescriptionLocalization('fr', 'Votre adresse email @myges.fr').setMinLength(10).setRequired(true))
     ,
     execute(interaction: CommandInteraction, app: Client) {
         let firstname: string = interaction.options.get('firstname')?.value?.toString() || 'invalid';

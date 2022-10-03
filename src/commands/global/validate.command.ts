@@ -11,9 +11,10 @@ const command: ICommand = {
     data: new SlashCommandBuilder()
         .setName('validate')
         .setDescription('Validate your verification key')
-        .addStringOption(opt => opt.setName('code').setDescription('Your verification key').setMinLength(12).setMaxLength(12).setRequired(true)),
+        .setDescriptionLocalization('fr', 'Validez votre clé de vérification')
+        .addStringOption(opt => opt.setName('key').setNameLocalization('fr', 'clé').setDescription('Your verification key').setDescriptionLocalization('fr', 'Votre clé de vérification').setMinLength(12).setMaxLength(12).setRequired(true)),
     execute(interaction: CommandInteraction, app: Client) {
-        const code: any = interaction.options.get('code')?.value;
+        const code: any = interaction.options.get('key')?.value;
 
         UserUtil.isRegistered(interaction.user.id).then(flg => {
             if(flg || interaction.guild?.members.cache.find(m => m.user.id === interaction.user.id)?.roles.cache.find(r => r.name.toLowerCase() === 'classe')) return interaction.reply({embeds: [EmbedsUtil.warning('🤷‍♂️ You are already verified !', [])], ephemeral: true});

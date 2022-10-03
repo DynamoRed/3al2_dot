@@ -25,4 +25,10 @@ export class EmbedsUtil {
             .setColor(new ColorsUtil().red)
             .setDescription(`\`\`\`\n ${title} \n\`\`\`${lines.map(l => '\n» ' + l).join('')}`);
     }
+
+    static empty(): EmbedBuilder{
+        return new EmbedBuilder()
+            .setColor(new ColorsUtil().transparent)
+            .setDescription(`\`\`\`\n *********************** \n\`\`\``);
+    }
 }
