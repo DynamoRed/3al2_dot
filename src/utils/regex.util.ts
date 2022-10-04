@@ -4,10 +4,10 @@ export class RegexUtil {
     }
 
     static get mygesEmailAdress() {
-        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@myges.fr$/;
+        return /^[a-zA-Z0-9]+@myges.fr$/;
     }
 
     static get fullName(){
-        return /^[A-Za-z -]+$/i;
+        return /^[A-Za-zéèêùüûàâäïîôöç -]+$/i;
     }
 }
