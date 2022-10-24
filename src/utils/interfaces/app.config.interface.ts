@@ -1,5 +1,12 @@
 import { ColorResolvable } from "discord.js";
 
+export interface IAppConfigServersChannels {
+	C_LOGS: string;
+	C_REGISTER: string;
+	C_DIARY: string;
+	C_SUGGESTIONS: string;
+}
+
 export interface IAppConfig {
 	informations: {
 		name: string;
@@ -20,4 +27,5 @@ export interface IAppConfig {
 	};
 	authorizedServers: string[];
 	commandsOnlyChannels: any;
+	serversChannels: any;
 }

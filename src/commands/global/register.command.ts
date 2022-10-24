@@ -12,6 +12,7 @@ import { MysqlError } from "mysql";
 
 const command: ICommand = {
     name: 'register',
+    timeout: 60,
     data: new SlashCommandBuilder()
             .setName('register')
             .setDescription('Register your @myges.fr email adress to our services')

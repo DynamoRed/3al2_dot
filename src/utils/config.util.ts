@@ -1,4 +1,4 @@
-import { IAppConfig } from "./interfaces/app.config.interface";
+import { IAppConfig, IAppConfigServersChannels } from "./interfaces/app.config.interface";
 import fs from 'fs';
 
 export class Configuration {
@@ -24,7 +24,11 @@ export class Configuration {
 		return this._appConfig.authorizedServers;
 	}
 
-	public getCommandsOnly(cid: string): string[]{
-		return this._appConfig.commandsOnlyChannels[cid] || [];
+	public getCommandsOnly(gid: string): string[]{
+		return this._appConfig.commandsOnlyChannels[gid] || [];
+	}
+
+	public getChannels(gid: string): IAppConfigServersChannels {
+		return this._appConfig.serversChannels[gid] || [];
 	}
 }

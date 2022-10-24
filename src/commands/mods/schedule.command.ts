@@ -2,9 +2,12 @@ import { Client, CommandInteraction, PermissionFlagsBits, SlashCommandBuilder } 
 import { ICommand } from "../../utils/interfaces/command.interface";
 
 const command: ICommand = {
-    name: 'kick',
+    name: 'schedule',
     inTest: true,
-    data: new SlashCommandBuilder().setName('kick').setDescription('N.A.').setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
+    data: new SlashCommandBuilder()
+            .setName('schedule')
+            .setDescription('Schedule something')
+            .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     execute(interaction: CommandInteraction, app: Client) {
 
     },
